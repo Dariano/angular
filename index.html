@@ -2,42 +2,34 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Lista telefonica</title>
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<style>
-			.jumbotron{
-				width: 600px;
-				text-align: center;
-				margin-top: 20px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-			
-			.table{
-				margin-top: 20px;
-			}
-			
-			.form-control{
-				margin: 5px;
-			}
-			
-			.selecionado{
-				background-color: yellow;
-			}
-			
-			.negrito{
-				font-weight: bold;
-			}
-		</style>
-		<script src="js/angular.js"></script>
-		<script src="js/App/app.js"></script>
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/app.css">
+		<link rel="stylesheet" type="text/css" href="css/ui.css">
+		<script src="lib/angular/angular.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers/listaTelefonicaCtrl.js"></script>
+		<script src="js/services/contatosAPIServices.js"></script>
+		<script src="js/services/operadorasAPIServices.js"></script>
+		<script src="js/value/configValue.js"></script>
+		<script src="js/value/configValue.js"></script>
+		<script src="js/config/serialGeneratorConfig.js"></script>
+		<script src="js/services/serialGeneratorService.js"></script>
+		<script src="js/filters/nameFilter.js"></script>
+		<script src="js/filters/ellipsisFilter.js"></script>
+		<script src="js/directives/uiAlertDirective.js"></script>
 	</head>
 	<body ng-controller="listaTelefonicaCtrl">
 		<div class="jumbotron">
 			<h4 ng-bind="app"></h4>
+			<ui-alert title="teste">
+				{{error}}
+			</ui-alert>
+			
 			<input type="text" class="form-control" ng-model="criterioDeBusca" placeholder="O que você está buscando?" />
 			<table class="table">
 				<tr>
 					<th></th>
+					<th>Serial</th>
 					<th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
 					<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
 					<th>Operadora</th>
@@ -47,7 +39,8 @@
 					<td>
 						<input type="checkbox" ng-model="contato.selecionado"></input>
 					</td>
-					<td ng-bind="contato.nome | uppercase"></td>
+					<td ng-bind="contato.serial"></td>
+					<td ng-bind="contato.nome | name | ellipsis:15"></td>
 					<td ng-bind="contato.telefone"></td>
 					<td ng-bind="contato.operadora.nome | lowercase"></td>
 					<td ng-bind="contato.data | date: 'dd/MM/yyyy'"></td>
@@ -80,7 +73,7 @@
 			</form>
 		</div>
 	
-		<div ng-include="'roda-pe.html'"></div>
+		<div ng-include="'view/roda-pe.html'"></div>
 	</body>
 
 </html>
